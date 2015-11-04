@@ -1,0 +1,32 @@
+{
+  "name": "hapi-hapi",
+  "version": "1.0.0",
+  "description": "Some helpers for making Hapi routes/controllers",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab test/index.js",
+    "prepublish": "npm test"
+  },
+  "keywords": [
+    "hapi",
+    "routes"
+  ],
+  "author": "Nathan Hoad",
+  "license": "MIT",
+  "dependencies": {
+    "inert": "^3.2.0",
+    "require-tree": "^1.1.1"
+  },
+  "devDependencies": {
+    "hapi": "^11.0.5",
+    "lab": "^7.1.0",
+    "should": "^7.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nathanhoad/hapi-hapi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nathanhoad/hapi-hapi/issues"
+  }
+}
