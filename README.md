@@ -29,3 +29,22 @@ HapiHapi = require('hapi-hapi');
 
 HapiHapi.assets(server, __dirname + '/build', '/assets/{param*}');
 ```
+
+
+### Views
+
+Set up view handling (with Handlebars):
+
+```javascript
+HapiHapi = require('hapi-hapi');
+
+// assuming a server has been created
+
+HapiHapi.views(server, __dirname + '/views', { title: 'This is the title' });
+```
+
+Within the `views` directory you need to include a `layouts` and `partials` folder. Inside
+`layouts` you need to include a `default.html` layout (or specify your own when rendering
+views).
+
+The third argument is a `context` to pass into the Handlebars views.

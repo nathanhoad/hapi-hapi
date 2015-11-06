@@ -1,7 +1,7 @@
 {
   "name": "hapi-hapi",
-  "version": "1.0.0",
-  "description": "Some helpers for making Hapi routes/controllers",
+  "version": "1.0.1",
+  "description": "Some helpers for setting up Hapi",
   "main": "index.js",
   "scripts": {
     "test": "lab test/index.js",
@@ -9,13 +9,16 @@
   },
   "keywords": [
     "hapi",
-    "routes"
+    "routes",
+    "views"
   ],
   "author": "Nathan Hoad",
   "license": "MIT",
   "dependencies": {
+    "handlebars": "^4.0.4",
     "inert": "^3.2.0",
-    "require-tree": "^1.1.1"
+    "require-tree": "^1.1.1",
+    "vision": "^4.0.0"
   },
   "devDependencies": {
     "hapi": "^11.0.5",

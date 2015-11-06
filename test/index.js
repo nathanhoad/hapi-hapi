@@ -41,4 +41,17 @@ lab.experiment('Hapi Hapi', function () {
             });
         });
     });
+    
+    
+    lab.suite('Views Setup', function () {
+        lab.test('maps a views directory', function (done) {
+            HapiHapi.views(Server, __dirname + '/server/views', { title: 'This is the title' });
+            
+            Server.inject({ method: 'GET', url: '/' }, function (response) {
+                response.statusCode.should.equal(200);
+                response.result.should.containEql('This is the title');
+                done();
+            });
+        });
+    });
 });

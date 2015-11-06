@@ -1,5 +1,7 @@
 var RequireTree = require('require-tree'),
-    Inert = require('inert');
+    Inert = require('inert'),
+    Vision = require('vision'),
+    Handlebars = require('handlebars');
 
 
 var HapiHapi = {
@@ -27,6 +29,22 @@ var HapiHapi = {
                     path: directory
                 }
             }
+        });
+    },
+    
+    
+    views: function (server, path, context) {
+        server.register(Vision, function () {
+            server.views({
+                engines: {
+                    html: Handlebars
+                },
+                path: path,
+                layoutPath: path + '/layouts',
+                partialsPath: path + '/partials',
+                layout: 'default',
+                context: context
+            });
         });
     }
     
