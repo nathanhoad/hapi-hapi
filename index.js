@@ -1,4 +1,5 @@
-var RequireTree = require('require-tree'),
+var FS = require('fs'),
+    RequireTree = require('require-tree'),
     Inert = require('inert'),
     Vision = require('vision'),
     Handlebars = require('handlebars');
@@ -46,6 +47,15 @@ var HapiHapi = {
                 context: context
             });
         });
+    },
+    
+    
+    view: function (path, locals) {
+        locals = locals || {};
+        
+        var view = Handlebars.compile(FS.readFileSync(path, 'utf8'));
+        
+        return view(locals);
     }
     
 }

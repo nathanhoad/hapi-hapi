@@ -54,4 +54,14 @@ lab.experiment('Hapi Hapi', function () {
             });
         });
     });
+    
+    
+    lab.suite('Templates', function () {
+        lab.test('loads a template compiler', function (done) {
+            var view = HapiHapi.view(__dirname + '/server/views/template.html', { reason: 'compiling templates' });
+            
+            view.should.containEql('compiling templates');
+            done();
+        });
+    });
 });
