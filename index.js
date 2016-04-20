@@ -34,18 +34,26 @@ var HapiHapi = {
     },
     
     
-    views: function (server, path, context) {
-        server.register(Vision, function () {
-            server.views({
-                engines: {
-                    html: Handlebars
-                },
+    views: function (server, path_or_config, context) {
+        if (typeof path_or_config == "string") {
+            var path = path_or_config;
+            path_or_config = {
                 path: path,
                 layoutPath: path + '/layouts',
-                partialsPath: path + '/partials',
-                layout: 'default',
-                context: context
-            });
+                partialsPath: path + '/partials'
+            };
+        }
+        
+        var config = Object.assign({
+            engines: {
+                html: Handlebars
+            },
+            layout: 'default',
+            context: context
+        }, path_or_config);
+        
+        server.register(Vision, function () {
+            server.views(config);
         });
     },
     

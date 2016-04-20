@@ -1,6 +1,6 @@
-var Lab = require('lab'),
-    Should = require('should'),
-    Server = require('./server');
+var Hapi = require('hapi');
+var Lab = require('lab');
+var Should = require('should');
 
 var HapiHapi = require('..');
 
@@ -9,6 +9,25 @@ var lab = Lab.script();
 exports.lab = lab;
 
 lab.experiment('Hapi Hapi', function () {
+    var Server;
+    
+    
+    lab.beforeEach(function (done) {
+        Server = new Hapi.Server();
+        Server.connection({ port: 5000 });
+        Server.route([{
+            method: 'GET',
+            path: '/',
+            config: {
+                handler: function (request, reply) {
+                    reply.view('home');
+                }
+            }
+        }]);
+        done();
+    });
+    
+    
     lab.suite('Controller Setup', function () {
         lab.test('maps controllers', function (done) {
             HapiHapi.controllers(Server, __dirname + '/server/controllers');
@@ -50,6 +69,22 @@ lab.experiment('Hapi Hapi', function () {
             Server.inject({ method: 'GET', url: '/' }, function (response) {
                 response.statusCode.should.equal(200);
                 response.result.should.containEql('This is the title');
+                done();
+            });
+        });
+        
+        lab.test('allows path overrides', function (done) {
+            HapiHapi.views(Server, { 
+                path: __dirname + '/server/views', 
+                layoutPath: __dirname + '/server/views/alternative-layouts',
+                layout: 'alternative-default'
+            }, {
+                title: 'Title'
+            });
+            
+            Server.inject({ method: 'GET', url: '/' }, function (response) {
+                response.statusCode.should.equal(200);
+                response.result.should.containEql('Alternative Title');
                 done();
             });
         });
