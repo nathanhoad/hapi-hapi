@@ -35,22 +35,30 @@ var HapiHapi = {
     
     
     views: function (server, path_or_config, context) {
+        var config;
+        
         if (typeof path_or_config == "string") {
             var path = path_or_config;
-            path_or_config = {
+            config = {
                 path: path,
                 layoutPath: path + '/layouts',
-                partialsPath: path + '/partials'
+                partialsPath: path + '/partials',
+                layout: 'default'
             };
+        } else {
+            config = path_or_config;
+        }
+        
+        if (typeof config.layoutPath == "undefined") {
+            config.layout = false;
         }
         
         var config = Object.assign({
             engines: {
                 html: Handlebars
             },
-            layout: 'default',
             context: context
-        }, path_or_config);
+        }, config);
         
         server.register(Vision, function () {
             server.views(config);
