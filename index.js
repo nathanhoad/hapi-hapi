@@ -1,4 +1,5 @@
 var FS = require('fs'),
+    Path = require('path'),
     RequireTree = require('require-tree'),
     Inert = require('inert'),
     Vision = require('vision'),
@@ -6,7 +7,6 @@ var FS = require('fs'),
 
 
 var HapiHapi = {
-    
     controllers: function (server, directory) {
         RequireTree(directory, { 
             filter: /^[^_]/,
@@ -17,7 +17,7 @@ var HapiHapi = {
     },
     
     
-    assets: function (server, directory, path) {
+    assets: function (server, directory, path, special_files) {
         if (!path) path = '/assets/{param*}';
         
         server.register(Inert, function () {});
@@ -31,6 +31,18 @@ var HapiHapi = {
                 }
             }
         });
+        
+        if (special_files) {
+            special_files.forEach(function (file) {
+                server.route({
+                    method: 'GET',
+                    path: '/' + Path.basename(file),
+                    handler: {
+                        file: file
+                    }
+                });
+            });
+        }
     },
     
     
@@ -73,7 +85,6 @@ var HapiHapi = {
         
         return view(locals);
     }
-    
 }
 
 

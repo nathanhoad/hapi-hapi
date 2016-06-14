@@ -30,6 +30,16 @@ HapiHapi = require('hapi-hapi');
 HapiHapi.assets(server, __dirname + '/build', '/assets/{param*}');
 ```
 
+You can also pass an array as the fourth argument to set up special files (eg. 
+robots.txt, favicon.ico) that need to be served from the root path:
+
+```javascript
+HapiHapi.assets(Server, __dirname + '/build', null, [
+  __dirname + '/static/robots.txt', // Makes /robots.txt available
+  __dirname + '/static/favicon.ico' // Makes /favicon.ico available
+]);
+```
+
 
 ### Views
 

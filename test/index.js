@@ -56,7 +56,31 @@ lab.experiment('Hapi Hapi', function () {
             
             Server.inject({ method: 'GET', url: '/assets/thing.txt' }, function (response) {
                 response.statusCode.should.equal(200);
+                response.result.should.equal('This is an asset.');
                 done();
+            });
+        });
+        
+        
+        lab.test('can handle special files', function (done) {
+            HapiHapi.assets(Server, __dirname + '/server/assets', null, [
+                __dirname + '/server/static/robots.txt',
+                __dirname + '/server/static/favicon.ico'
+            ]);
+            
+            Server.inject({ method: 'GET', url: '/assets/thing.txt' }, function (response) {
+                response.statusCode.should.equal(200);
+                response.result.should.equal('This is an asset.');
+                
+                Server.inject({ method: 'GET', url: '/robots.txt' }, function (response) {
+                    response.statusCode.should.equal(200);
+                    response.result.should.equal('User-agent: *\nDisallow: /');
+                    
+                    Server.inject({ method: 'GET', url: '/favicon.ico' }, function (response) {
+                        response.statusCode.should.equal(200);
+                        done();
+                    });
+                });
             });
         });
     });
